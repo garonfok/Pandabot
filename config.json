@@ -1,5 +1,4 @@
 {
-    "version": "1.0.0",
     "greetings": [
         "hello",
         "hi",
@@ -9,5 +8,6 @@
         "greetings",
         "salutations",
         "hiya"
-    ]
+    ],
+    "defaultPrefix": "!"
 }
