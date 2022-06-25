@@ -17,7 +17,7 @@ Pandabot is a Discord bot that can keep track of Minecraft waypoints and worlds.
 
 ## Repository
 
-Daily MD is available on [Github](https://github.com/garonfok/pandabot) under the MIT license
+Pandabot is available on [Github](https://github.com/garonfok/pandabot) under the MIT license
 
 ## Features
 
