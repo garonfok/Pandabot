@@ -1,58 +1,37 @@
-require("dotenv").config();
-const Discord = require("discord.js");
-const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES"],
+import { Client, Intents } from "discord.js";
+import WOKCommands from "wokcommands";
+import path from "path";
+import "dotenv/config";
+
+const token = process.env.DISCORD_TOKEN;
+const guildID = process.env.DISCORD_GUILD_ID;
+const channelID = process.env.DISCORD_CHANNEL_ID;
+
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
-const prefix = require("discord-prefix");
-const { greetings } = require("../config.json");
 
-// if server has no given prefix, use default
-let defaultPrefix = "!";
-
-var punctuation =
-  /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
+console.log("Bot is starting...");
 
 client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  new WOKCommands(client, {
+    testServers: [guildID!],
+    commandsDir: path.join(__dirname, "commands"),
+    typeScript: true,
+    mongoUri: process.env.MONGO_URI!,
+    disabledDefaultCommands: [
+      "language"
+    ]
+  })
+    .setColor("#1d252c")
+    .setDefaultPrefix("!")
+    .setDisplayName("Pandabot");
 });
 
-client.on("message", (msg: any) => {
-  // Stop code execution if message is DM
-  if (!msg.guild) return;
+client.login(token);
 
-  // GREETINGS
-
-  // Greets the user if they greet the bot
-  const msgArray = msg.content
-    .toLowerCase()
-    .replace(punctuation, "")
-    .split(" ");
-  if (
-    (greetings.includes(msgArray[0]) && msgArray[1] === "panda") ||
-    msgArray[1] === "pandabot"
-  ) {
-    msg.channel.send(`Hi ${msg.author}!`);
-  }
-
-  // HEY PANDA
-  if (
-    msg.content.toLowerCase() === "hey panda" ||
-    msg.content.toLowerCase() === "hey pandabot"
-  ) {
-    if (msg.content.toUpperCase() === msg.content) {
-      msg.channel.send("HEY WHAT?");
-    } else {
-      msg.channel.send("Hey what?");
-    }
-  }
-
-  // Get prefix for Discord server
-  let guildPrefix = prefix.getPrefix(msg.guild.id);
-
-  // Set default prefix if none is set
-  if (!guildPrefix) {
-    guildPrefix = defaultPrefix;
-  }
-});
-
-client.login(process.env.DISCORD_TOKEN);
+// client.once("ready", () => {
+//   client.channels.fetch(channelID!).then(channel =>
+//     console.log("Hello world!")
+//   )
+// })
