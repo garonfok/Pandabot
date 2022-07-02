@@ -1,0 +1,6 @@
+services:
+  code-server:
+    image: garonfok/pandabot
+    container_name: pandabot
+    environment:
+      - TZ=America/Los_Angeles
