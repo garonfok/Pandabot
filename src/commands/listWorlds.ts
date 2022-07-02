@@ -16,7 +16,7 @@ export default {
       .setDescription("Currently registered worlds:");
 
     for (const world of worlds) {
-      embed.addField(world.worldName, `Seed: ${world.seed}`, false);
+      embed.addField(world.worldName, `Seed: ${world.seed}`);
     }
 
     return embed;

@@ -20,15 +20,6 @@ interface PlayersDocument extends mongoose.Document {
   playerId: string;
 }
 
-interface WaypointsDocument extends mongoose.Document {
-  guildId: string;
-  roleId: string;
-  waypointName: string;
-  coordinateX: number;
-  coordinateY: number;
-  coordinateZ: number;
-}
-
 export default {
   category: "Minecraft",
   description:

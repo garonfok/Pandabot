@@ -53,8 +53,7 @@ export default {
     for (const w of waypoints) {
       embed.addField(
         w.waypointName,
-        `X: ${w.coordinateX}\nY: ${w.coordinateY}\nZ: ${w.coordinateZ}\n`,
-        false
+        `X: ${w.coordinateX}\nY: ${w.coordinateY}\nZ: ${w.coordinateZ}\n`
       );
     }
 

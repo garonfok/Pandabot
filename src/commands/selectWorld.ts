@@ -65,11 +65,6 @@ export default {
 
       let content;
 
-      // Get player to update role
-      // const player = mongoose
-      //   .model<PlayersDocument>("players")
-      //   .findOne({ playerId: interaction.user!.id });
-
       const playersModel = mongoose.model<PlayersDocument>("players");
 
       if (menuSelection != "-1") {
