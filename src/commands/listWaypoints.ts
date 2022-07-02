@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
-import schema from "../database-schema/minecraft/waypoints";
+import schemaWaypoints from "../database-schema/minecraft/waypoints";
+import schemaPlayers from "../database-schema/minecraft/players";
 import mongoose from "mongoose";
 
 interface WaypointsDocument extends mongoose.Document {
@@ -11,6 +12,11 @@ interface WaypointsDocument extends mongoose.Document {
   coordinateX: number;
   coordinateY: number;
   coordinateZ: number;
+}
+interface PlayersDocument extends mongoose.Document {
+  guildId: string;
+  roleId: string;
+  playerId: string;
 }
 
 export default {
@@ -25,7 +31,20 @@ export default {
       .model<WaypointsDocument>("waypoints")
       .findOneAndDelete({ roleId: "dummy" });
 
-    const waypoints = await schema.find({ guildId: interaction.guild!.id });
+    // Grab roleId on player
+    const playerModel = await mongoose.model<PlayersDocument>("players")
+    .findOne({ playerId: interaction.user?.id }) as PlayersDocument;
+
+    // Quit if player does not have a role
+    if (!playerModel) {
+      interaction.reply({
+        content: "Error: You must have a Minecraft role selected!",
+        ephemeral: true
+      });
+      return;
+    }
+
+    const waypoints = await schemaWaypoints.find({ guildId: interaction.guild!.id, roleId: playerModel.roleId });
 
     const embed = new MessageEmbed()
       .setTitle("World Waypoints")
