@@ -4,18 +4,18 @@ import path from "path";
 import "dotenv/config";
 
 const token = process.env.DISCORD_TOKEN;
-const guildID = process.env.DISCORD_GUILD_ID;
-const channelID = process.env.DISCORD_CHANNEL_ID;
+const guildId = process.env.DISCORD_GUILD_ID;
+const channelId = process.env.DISCORD_CHANNEL_ID;
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
 });
 
 console.log("Bot is starting...");
 
 client.on("ready", () => {
   new WOKCommands(client, {
-    testServers: [guildID!],
+    testServers: [guildId!],
     commandsDir: path.join(__dirname, "commands"),
     typeScript: true,
     mongoUri: process.env.MONGO_URI!,
