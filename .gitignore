@@ -136,3 +136,4 @@ dist
 .ionide
 
 .commands-dev/
+.DS_Store
