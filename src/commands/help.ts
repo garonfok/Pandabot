@@ -1,18 +1,31 @@
-import { ICommand } from 'wokcommands'
+import { ICommand } from "wokcommands";
+
+import { MessageEmbed } from "discord.js";
 
 export default {
   slash: true,
-  permissions: ["ADMINISTRATOR"],
   category: "Utility",
   description: "Shows help for a command",
   callback: ({ instance, interaction }) => {
-    instance.commandHandler.commands.forEach((command: any) => {
-      console.log(command)
-    })
+    let embed = new MessageEmbed()
+      .setColor("#70b237")
+      .setTitle("Help Menu")
+      .setDescription("Shows available commands for Pandabot.");
 
-    interaction.reply({
-      ephemeral: true,
-      content: "Check the console log for all of the commands."
-    })
+    instance.commandHandler.commands.forEach((command: any) => {
+      embed.addField(command.names.toString(), command.description);
+      console.log(command);
+    });
+
+    embed.setFooter({
+      text: "Do not rename, change, delete, or otherwise modify any of the roles created by Pandabot. This WILL break the bot!",
+    });
+
+    interaction
+      .reply({
+        embeds: [embed],
+      })
+      .then(() => console.log("Displayed all commands."))
+      .catch(console.error);
   },
-} as ICommand
+} as ICommand;
