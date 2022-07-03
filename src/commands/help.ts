@@ -13,8 +13,10 @@ export default {
       .setDescription("Shows available commands for Pandabot.");
 
     instance.commandHandler.commands.forEach((command: any) => {
-      embed.addField(command.names.toString(), command.description);
-      console.log(command);
+      if (!command.testOnly) {
+        embed.addField(command.names.toString(), command.description);
+        console.log(command);
+      }
     });
 
     embed.setFooter({
