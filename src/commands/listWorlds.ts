@@ -19,6 +19,13 @@ export default {
       embed.addField(world.worldName, `Seed: ${world.seed}`);
     }
 
-    return embed;
+    interaction
+      .reply({
+        embeds: [embed],
+      })
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
+      .catch(console.error);
   },
 } as ICommand;

@@ -63,10 +63,15 @@ export default {
         coordinateZ: coordZ,
       }).save();
 
-      await interaction.reply({
-        ephemeral: true,
-        content,
-      });
+      await interaction
+        .reply({
+          ephemeral: true,
+          content,
+        })
+        .then(() =>
+          console.log(`Command "${interaction.commandName}" finished running.`)
+        )
+        .catch(console.error);
     } catch (e) {
       console.error(e);
       interaction.reply({

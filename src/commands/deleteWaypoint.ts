@@ -90,7 +90,12 @@ export default {
 
     const content = "Delete a waypoint.";
 
-    await interaction.reply({ content: content, components: [row] });
+    await interaction
+      .reply({ content: content, components: [row] })
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
+      .catch(console.error);
 
     console.log("Waiting for user input...");
   },

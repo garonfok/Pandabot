@@ -35,7 +35,7 @@ export default {
 
   callback: async ({ interaction, args }) => {
     try {
-      let content;
+      let content: string;
 
       // Get and store worldName
       const worldName = args[0];
@@ -124,7 +124,11 @@ export default {
       interaction.reply({
         ephemeral: true,
         content,
-      });
+      })
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
+      .catch(console.error);
     } catch (e) {
       console.error(e);
       interaction.reply({

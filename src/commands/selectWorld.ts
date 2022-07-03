@@ -145,10 +145,15 @@ export default {
     const content =
       "Select a world. This will add that world to your profile as a role.";
 
-    await interaction.reply({
-      content: content,
-      components: [row],
-      ephemeral: true,
-    });
+    await interaction
+      .reply({
+        content: content,
+        components: [row],
+        ephemeral: true,
+      })
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
+      .catch(console.error);
   },
 } as ICommand;

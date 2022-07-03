@@ -124,10 +124,15 @@ export default {
         content = "This action has been cancelled.";
       }
 
-      await interaction.editReply({
-        content,
-        components: [],
-      });
+      await interaction
+        .editReply({
+          content,
+          components: [],
+        })
+        .then(() =>
+          console.log(`Command "${interaction.commandName}" finished running.`)
+        )
+        .catch(console.error);
     });
   },
 } as ICommand;

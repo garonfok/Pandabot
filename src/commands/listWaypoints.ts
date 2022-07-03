@@ -32,19 +32,23 @@ export default {
       .findOneAndDelete({ roleId: "dummy" });
 
     // Grab roleId on player
-    const playerModel = await mongoose.model<PlayersDocument>("players")
-    .findOne({ playerId: interaction.user?.id }) as PlayersDocument;
+    const playerModel = (await mongoose
+      .model<PlayersDocument>("players")
+      .findOne({ playerId: interaction.user?.id })) as PlayersDocument;
 
     // Quit if player does not have a role
     if (!playerModel) {
       interaction.reply({
         content: "Error: You must have a Minecraft role selected!",
-        ephemeral: true
+        ephemeral: true,
       });
       return;
     }
 
-    const waypoints = await schemaWaypoints.find({ guildId: interaction.guild!.id, roleId: playerModel.roleId });
+    const waypoints = await schemaWaypoints.find({
+      guildId: interaction.guild!.id,
+      roleId: playerModel.roleId,
+    });
 
     const embed = new MessageEmbed()
       .setTitle("World Waypoints")
@@ -57,6 +61,13 @@ export default {
       );
     }
 
-    return embed;
+    interaction
+      .reply({
+        embeds: [embed],
+      })
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
+      .catch(console.error);
   },
 } as ICommand;

@@ -1,10 +1,5 @@
 import { ICommand } from "wokcommands";
-import {
-  Client,
-  MessageActionRow,
-  MessageSelectMenu,
-  Role,
-} from "discord.js";
+import { Client, MessageActionRow, MessageSelectMenu, Role } from "discord.js";
 import mongoose from "mongoose";
 
 // Database schema for the world
@@ -53,20 +48,16 @@ export default {
       )) as Role;
 
       // Delete world from worlds model
-      await mongoose
-        .model<WorldsDocument>("worlds")
-        .findOneAndDelete({
-          roleId: deleteWorld.id,
-          guildId: interaction.guild!.id,
-        });
+      await mongoose.model<WorldsDocument>("worlds").findOneAndDelete({
+        roleId: deleteWorld.id,
+        guildId: interaction.guild!.id,
+      });
 
       // Delete linked waypoints from waypoints model
-      await mongoose
-        .model<WaypointsDocument>("waypoints")
-        .deleteMany({
-          roleId: deleteWorld.id,
-          guildId: interaction.guild!.id,
-        })
+      await mongoose.model<WaypointsDocument>("waypoints").deleteMany({
+        roleId: deleteWorld.id,
+        guildId: interaction.guild!.id,
+      });
 
       // Delete linked players from players model
       await mongoose
@@ -123,7 +114,12 @@ export default {
     const content =
       "Select a world. This will delete that world, and delete all waypoints in that world.\n This cannot be undone!";
 
-    await interaction.reply({ content: content, components: [row] });
+    await interaction
+      .reply({ content: content, components: [row] })
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
+      .catch(console.error);
 
     console.log("Waiting for user input...");
   },

@@ -27,7 +27,9 @@ export default {
       .reply({
         embeds: [embed],
       })
-      .then(() => console.log("Displayed all commands."))
+      .then(() =>
+        console.log(`Command "${interaction.commandName}" finished running.`)
+      )
       .catch(console.error);
   },
 } as ICommand;
