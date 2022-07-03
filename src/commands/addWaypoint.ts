@@ -46,10 +46,6 @@ export default {
 
       const content = `Waypoint '${coordName}' at ${coordX}, ${coordY}, ${coordZ} added!`;
 
-      // const { member } = interaction;
-      // const memberRoleManager = member! as GuildMember;
-      // memberRoleManager.roles;
-
       const world = (await mongoose
         .model<PlayersDocument>("players")
         .findOne({ playerId: interaction.user.id })) as PlayersDocument;
