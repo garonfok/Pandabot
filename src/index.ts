@@ -20,7 +20,8 @@ client.on("ready", () => {
     typeScript: true,
     mongoUri: process.env.MONGO_URI!,
     disabledDefaultCommands: [
-      "language"
+      "language",
+      "prefix"
     ]
   })
     .setColor("#1d252c")
