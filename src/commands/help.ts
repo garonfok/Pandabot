@@ -13,7 +13,7 @@ export default {
       .setDescription("Shows available commands for Pandabot.");
 
     instance.commandHandler.commands.forEach((command: any) => {
-      if (!command.testOnly) {
+      if (!command.testOnly && command.category != 'Configuration') {
         embed.addField(command.names.toString(), command.description);
         console.log(command);
       }
